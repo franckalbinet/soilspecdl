@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "soilspecdl"
+  site-url: "https://franckalbinet.github.io/soilspecdl"
+  description: ""
+  repo-branch: main
+  repo-url: "https://github.com/franckalbinet/soilspecdl"

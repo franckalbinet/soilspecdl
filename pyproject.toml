@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",
 ]
-dependencies = []
+dependencies = ['fastai', 'soilspectfm', 'soilspecdata', 'pandas', 'seaborn', 'kennard-stone']
 
 [project.urls]
 Repository = "https://github.com/franckalbinet/soilspecdl"

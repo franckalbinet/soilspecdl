@@ -49,4 +49,10 @@ d = { 'settings': { 'branch': 'main',
                                    'soilspecdl.models.MirzaiCNN': ('models.html#mirzaicnn', 'soilspecdl/models.py'),
                                    'soilspecdl.models.MirzaiCNN.__init__': ('models.html#mirzaicnn.__init__', 'soilspecdl/models.py'),
                                    'soilspecdl.models.MirzaiCNN.forward': ('models.html#mirzaicnn.forward', 'soilspecdl/models.py'),
-                                   'soilspecdl.models.cnt_params': ('models.html#cnt_params', 'soilspecdl/models.py')}}}
+                                   'soilspecdl.models.cnt_params': ('models.html#cnt_params', 'soilspecdl/models.py')},
+            'soilspecdl.transforms': { 'soilspecdl.transforms.StandardizeSpectrum': ( 'transforms.html#standardizespectrum',
+                                                                                      'soilspecdl/transforms.py'),
+                                       'soilspecdl.transforms.StandardizeSpectrum.__init__': ( 'transforms.html#standardizespectrum.__init__',
+                                                                                               'soilspecdl/transforms.py'),
+                                       'soilspecdl.transforms.StandardizeSpectrum.encodes': ( 'transforms.html#standardizespectrum.encodes',
+                                                                                              'soilspecdl/transforms.py')}}}

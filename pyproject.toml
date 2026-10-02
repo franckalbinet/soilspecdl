@@ -16,18 +16,18 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
 ]
 dependencies = [
-    'fastai==2.8.7',
-    'fastcore==1.13.9',
-    'fastprogress==1.1.5',
-    'fasttransform==0.0.2',
-    'plum-dispatch==2.9.0',
-    'soilspectfm',
-    'soilspecdata',
+    'fastai>=2.8.12',
+    'fastcore>=2.2.22',
+    'fasttransform>=0.0.2',
+    'plum-dispatch>=2.9.0',
+    'soilspectfm>=0.1.1',
+    'soilspecdata>=0.2.1',
     'pandas',
-    'seaborn',
     'kennard-stone',
 ]
 
+[project.optional-dependencies]
+dev = ["nbdev>=3.3.24", "ipykernel", "build", "twine"]
 [project.urls]
 Repository = "https://github.com/franckalbinet/soilspecdl"
 Documentation = "https://franckalbinet.github.io/soilspecdl/"
@@ -41,4 +41,8 @@ version = {attr = "soilspecdl.__version__"}
 [tool.setuptools.packages.find]
 include = ["soilspecdl"]
 
+[tool.setuptools.package-data]
+soilspecdl = ["data/*.csv.gz"]
+
 [tool.nbdev]
+custom_sidebar = true

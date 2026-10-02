@@ -151,3 +151,10 @@ checklink/cookies.txt
 
 # Quarto
 .quarto
+
+# Local planning notes
+ROADMAP.md
+plan.ipynb
+
+# HTML figures written by nbdev-readme, unused by README.md
+index_files/figure-html/

@@ -1,0 +1,11 @@
+website:
+  sidebar:
+    contents:
+      - text: "Overview"
+        href: index.ipynb
+      - section: "API reference"
+        contents:
+          - 00_models.ipynb
+          - 01_dataloader.ipynb
+          - 02_transforms.ipynb
+          - 03_datasets.ipynb

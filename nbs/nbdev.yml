@@ -4,6 +4,11 @@ project:
 website:
   title: "soilspecdl"
   site-url: "https://franckalbinet.github.io/soilspecdl"
-  description: ""
+  description: "Practical deep learning for soil infrared spectroscopy, built on the fastai framework."
   repo-branch: main
   repo-url: "https://github.com/franckalbinet/soilspecdl"
+
+format-links:
+  - html
+  - format: commonmark
+    text: Markdown

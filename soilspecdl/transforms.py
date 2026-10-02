@@ -8,7 +8,6 @@ Docs: https://franckalbinet.github.io/soilspecdl/transforms.html.md"""
 __all__ = ['StandardizeSpectrum']
 
 # %% ../nbs/02_transforms.ipynb #3d3ca8da
-import torch
 from fastcore.all import *
 from fasttransform import Transform
 from .dataloader import TensorSpectrum
@@ -17,5 +16,4 @@ from .dataloader import TensorSpectrum
 class StandardizeSpectrum(Transform):
     "Standardize each spectrum to zero mean, unit variance across wavenumbers"
     def __init__(self, eps=1e-6): store_attr()
-    def encodes(self, x:TensorSpectrum):
-        return (x - x.mean(-1, keepdim=True)) / (x.std(-1, keepdim=True) + self.eps)
+    def encodes(self, x:TensorSpectrum): return (x - x.mean(-1, keepdim=True)) / (x.std(-1, keepdim=True) + self.eps)

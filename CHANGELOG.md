@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 0.1.1
+
+### New Features
+
+- Add `spectral_learner`, with backbone and head parameter groups ([#9](https://github.com/franckalbinet/soilspecdl/issues/9))
+
+
 ## 0.1.0
 
 ### Breaking Changes

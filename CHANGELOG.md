@@ -2,6 +2,18 @@
 
 <!-- do not remove -->
 
+## 0.1.2
+
+### New Features
+
+- Add `cross_validate`, returning per-fold, per-epoch losses and metrics ([#12](https://github.com/franckalbinet/soilspecdl/issues/12))
+- Add `get_kfold_splitters` for cross-validation ([#10](https://github.com/franckalbinet/soilspecdl/issues/10))
+
+### Bugs Squashed
+
+- `get_splitter` and `get_pre_splitter` reset the global NumPy random state ([#11](https://github.com/franckalbinet/soilspecdl/issues/11))
+
+
 ## 0.1.1
 
 ### New Features

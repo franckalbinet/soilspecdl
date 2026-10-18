@@ -2,6 +2,13 @@
 
 <!-- do not remove -->
 
+## 0.1.3
+
+### New Features
+
+- Add `plot_cv` and a `stage` column to `cross_validate` ([#13](https://github.com/franckalbinet/soilspecdl/issues/13))
+
+
 ## 0.1.2
 
 ### New Features

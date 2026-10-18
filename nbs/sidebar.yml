@@ -9,3 +9,4 @@ website:
           - 01_dataloader.ipynb
           - 02_transforms.ipynb
           - 03_datasets.ipynb
+          - 04_learner.ipynb

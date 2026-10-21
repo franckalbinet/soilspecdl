@@ -6,10 +6,10 @@ Docs: https://franckalbinet.github.io/soilspecdl/dataloader.html.md"""
 
 # %% auto #0
 __all__ = ['get_ks_splitter', 'get_splitter', 'get_pre_splitter', 'get_kfold_splitters', 'TensorSpectrum', 'show_batch',
-           'SpectralBlock', 'get_spectral_dls']
+           'SpectralBlock', 'get_spectral_dls', 'read_spa']
 
 # %% ../nbs/01_dataloader.ipynb #803b246c
-import numpy as np, torch
+import numpy as np, torch, struct
 from fastcore.all import *
 import matplotlib.pyplot as plt
 from fastai.torch_core import TensorBase
@@ -147,3 +147,26 @@ def get_spectral_dls(
     dls = dblock.dataloaders(items, bs=bs)
     dls.wns = wns
     return dls, test_idx
+
+# %% ../nbs/01_dataloader.ipynb #0fcebad5
+_spa_ytypes = {17: 'abs'} # OMNIC y-unit codes that `read_spa` supports, mapped to `Spectra.measurement_type`
+
+# `read_spa` belongs in soilspecdata, beside the OSSL loader. Move it there with an OPUS reader for Bruker files.
+def read_spa(
+    fn, # Path to a Thermo OMNIC `.spa` file
+)->tuple: # (wavenumbers in increasing order, values, measurement type)
+    "Read the spectrum in a Thermo OMNIC `.spa` file"
+    b = Path(fn).read_bytes()
+    blocks = {}
+    for pos in range(288, len(b) - 16, 16):
+        if b[pos] == 0: break
+        blocks.setdefault(b[pos], struct.unpack('<II', b[pos+2:pos+10]))
+    hdr, (off, _) = blocks[2][0], blocks[3]
+    n, = struct.unpack('<I', b[hdr+4:hdr+8])
+    xcode, ycode = b[hdr+8], b[hdr+12]
+    if xcode != 1: raise ValueError(f"x-unit code {xcode} is not cm⁻¹")
+    if ycode not in _spa_ytypes: raise ValueError(f"y-unit code {ycode} is not supported, only {list(_spa_ytypes)}")
+    x0, x1 = struct.unpack('<ff', b[hdr+16:hdr+24])
+    wns, vals = np.linspace(x0, x1, n), np.frombuffer(b, '<f4', count=n, offset=off).astype(float)
+    if x0 > x1: wns, vals = wns[::-1].copy(), vals[::-1].copy()
+    return wns, vals, _spa_ytypes[ycode]

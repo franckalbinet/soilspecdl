@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.1.4
+
+### New Features
+
+- Add `load_spa` to build a `Spectra` from `.spa` files ([#15](https://github.com/franckalbinet/soilspecdl/issues/15))
+- Add `read_spa` to read Thermo OMNIC `.spa` files ([#14](https://github.com/franckalbinet/soilspecdl/issues/14))
+
+
 ## 0.1.3
 
 ### New Features

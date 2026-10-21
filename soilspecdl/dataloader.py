@@ -6,7 +6,7 @@ Docs: https://franckalbinet.github.io/soilspecdl/dataloader.html.md"""
 
 # %% auto #0
 __all__ = ['get_ks_splitter', 'get_splitter', 'get_pre_splitter', 'get_kfold_splitters', 'TensorSpectrum', 'show_batch',
-           'SpectralBlock', 'get_spectral_dls', 'read_spa']
+           'SpectralBlock', 'get_spectral_dls', 'read_spa', 'load_spa']
 
 # %% ../nbs/01_dataloader.ipynb #803b246c
 import numpy as np, torch, struct
@@ -16,6 +16,7 @@ from fastai.torch_core import TensorBase
 from fastai.data.block import DataBlock, TransformBlock, RegressionBlock
 from kennard_stone import train_test_split as ks_split
 from plum import dispatch
+from soilspecdata.all import Spectra
 
 import logging
 logging.getLogger('kennard_stone').setLevel(logging.WARNING)
@@ -170,3 +171,20 @@ def read_spa(
     wns, vals = np.linspace(x0, x1, n), np.frombuffer(b, '<f4', count=n, offset=off).astype(float)
     if x0 > x1: wns, vals = wns[::-1].copy(), vals[::-1].copy()
     return wns, vals, _spa_ytypes[ycode]
+
+# %% ../nbs/01_dataloader.ipynb #82364f6b
+def load_spa(
+    fns, # Paths of `.spa` files, with one file per replicate
+    wns, # Wavenumbers to interpolate onto, in cm⁻¹, in increasing order
+    id_re=r'^\d+', # Regex whose match at the start of a file name is the sample ID
+)->Spectra: # One spectrum per sample, the mean of its replicates
+    "Read `.spa` files, interpolate each onto `wns`, and average the replicates of each sample"
+    wns, groups = np.asarray(wns), {}
+    for fn in map(Path, fns):
+        m = re.match(id_re, fn.name)
+        if not m: raise ValueError(f"No sample ID in {fn.name}")
+        x, vals, mtype = read_spa(fn)
+        if wns[0] < x[0] or wns[-1] > x[-1]: raise ValueError(f"{fn.name} covers {x[0]:.2f}–{x[-1]:.2f} cm⁻¹, which does not include `wns`")
+        groups.setdefault(m[0], []).append(np.interp(wns, x, vals))
+    return Spectra(wavenumbers=wns, spectra=np.stack([np.mean(o, axis=0) for o in groups.values()]),
+        measurement_type=mtype, sample_ids=np.array(list(groups)))

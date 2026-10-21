@@ -133,7 +133,7 @@ def get_spectral_dls(
     wns, # Wavenumbers
     splitter=None, # Function returning train/valid/test idxs
     bs=32, # Batch size
-    batch_tfms=None, # Batch transforms, e.g. [StandardizeSpectrum()]
+    batch_tfms=None, # Batch transforms, e.g. [BatchSNV()]
 )->tuple: # (DataLoaders with the grid in `dls.wns`, test set indices)
     "Create DataLoaders for spectra, with train, validation and test sets"
     wns = np.asarray(wns)

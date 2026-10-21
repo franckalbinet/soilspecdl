@@ -57,7 +57,7 @@ def cross_validate(
     n_splits=5, # Number of folds
     seed=42, # Random seed for the fold shuffle
     bs=32, # Batch size
-    batch_tfms=None, # Batch transforms, e.g. [StandardizeSpectrum()]
+    batch_tfms=None, # Batch transforms, e.g. [BatchSNV()]
     **kwargs
 )->pd.DataFrame: # One row per fold and epoch
     "Train one model per fold with `fit`, returning each fold's losses and metrics after every epoch"

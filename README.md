@@ -266,6 +266,13 @@ learn.fit_one_cycle(20, lr_max=1e-3)
 </div>
 ```
 
+## Upgrading from 0.1.x
+
+Version 0.2.0 changes the API of `soilspecdl`. To update code written for version 0.1.x:
+
+- `StandardizeSpectrum()` is now [`BatchSNV()`](https://franckalbinet.github.io/soilspecdl/transforms.html#batchsnv). [`BatchSNV`](https://franckalbinet.github.io/soilspecdl/transforms.html#batchsnv) divides by the population standard deviation, as `np.std` and soilspectfm’s `SNV` do. `StandardizeSpectrum` divided by the sample standard deviation (n - 1).
+- `read_spa` and `load_spa` are now in soilspecdata. Import them with `from soilspecdata.readers import read_spa, load_spa`, from SoilSpecData 0.2.2 or later.
+
 ## Upgrading from 0.0.x
 
 Version 0.1.0 changes the API of `soilspecdl`. To update code written for version 0.0.x:

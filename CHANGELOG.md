@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.2.0
+
+### Breaking Changes
+
+- Remove `read_spa` and `load_spa`, now in soilspecdata ([#17](https://github.com/franckalbinet/soilspecdl/issues/17))
+- Rename `StandardizeSpectrum` to `BatchSNV`, dividing by n ([#16](https://github.com/franckalbinet/soilspecdl/issues/16))
+
+
 ## 0.1.4
 
 ### New Features

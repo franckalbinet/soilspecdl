@@ -2,6 +2,14 @@
 
 <!-- do not remove -->
 
+## 0.3.1
+
+### New Features
+
+- Pass extra keyword arguments of `train_or_load` to `spectral_learner` ([#24](https://github.com/franckalbinet/soilspecdl/issues/24))
+- Add `load_weights`, to load a saved model without its training data ([#23](https://github.com/franckalbinet/soilspecdl/issues/23))
+
+
 ## 0.3.0
 
 ### New Features

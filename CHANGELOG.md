@@ -2,6 +2,17 @@
 
 <!-- do not remove -->
 
+## 0.3.0
+
+### New Features
+
+- Add the `transfer` module, to train, apply and adapt models across datasets and instruments ([#22](https://github.com/franckalbinet/soilspecdl/issues/22))
+- Add `group_folds`, for cross-validation that keeps each group in one fold ([#21](https://github.com/franckalbinet/soilspecdl/issues/21))
+- Add `groups` to `get_ks_splitter`, to keep each group on one side of the split ([#20](https://github.com/franckalbinet/soilspecdl/issues/20))
+- Add `get_mask_splitter`, for a fixed test set given as a boolean mask ([#19](https://github.com/franckalbinet/soilspecdl/issues/19))
+- Add `CutCNN`: the first blocks of a `SpectralCNN` with a new linear head ([#18](https://github.com/franckalbinet/soilspecdl/issues/18))
+
+
 ## 0.2.0
 
 ### Breaking Changes

@@ -43,13 +43,14 @@ def train_or_load(
     valid_pct=0.1, # Proportion of the samples for validation
     seed=42, # Seed for the validation split and the training
     tfm=BatchSNV(), # Transform applied to each batch
+    **kwargs, # Passed to `spectral_learner`, such as `loss_func` and `metrics`
 )->torch.nn.Module: # The trained model, on the CPU
     "Train a model from `model_fn` and save its weights to `path`, or load the weights if `path` exists"
     path = Path(path)
     if not path.exists():
         set_seed(seed)
         dls, _ = get_spectral_dls(X, y, wns, splitter=get_splitter(1 - valid_pct, valid_pct, seed=seed), batch_tfms=[tfm])
-        learn = spectral_learner(dls, model_fn())
+        learn = spectral_learner(dls, model_fn(), **kwargs)
         with learn.no_bar(), learn.no_logging(): learn.fit_one_cycle(epochs, lr_max=lr)
         path.parent.mkdir(parents=True, exist_ok=True)
         torch.save(learn.model.state_dict(), path)

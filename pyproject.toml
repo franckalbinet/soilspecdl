@@ -24,6 +24,7 @@ dependencies = [
     'soilspecdata>=0.2.1',
     'pandas',
     'kennard-stone',
+    'scikit-learn',
 ]
 
 [project.optional-dependencies]

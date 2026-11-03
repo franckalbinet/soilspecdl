@@ -14,6 +14,7 @@ from fastcore.all import *
 import matplotlib.pyplot as plt
 from fastai.torch_core import TensorBase
 from fastai.data.block import DataBlock, TransformBlock, RegressionBlock
+from fasttransform import Transform
 from kennard_stone import train_test_split as ks_split
 from plum import dispatch
 
@@ -140,14 +141,25 @@ def show_batch(
     plt.tight_layout()
 
 # %% ../nbs/01_dataloader.ipynb #0b74f4d0
+class _ToSpectrum(Transform):
+    "Turn a spectrum array into a `TensorSpectrum` carrying `wns`"
+    def __init__(self, wns): self.wns = wns
+    def encodes(self, x:np.ndarray): return TensorSpectrum(torch.tensor(x, dtype=torch.float32).unsqueeze(0), wns=self.wns)
+
 def SpectralBlock(
     wns, # Wavenumbers, attached to each spectrum as `wns`
 ):
     "Block turning each spectrum array into a `TensorSpectrum` carrying `wns`"
-    def _to_tensor(x:np.ndarray): return TensorSpectrum(torch.tensor(x, dtype=torch.float32).unsqueeze(0), wns=wns)
-    return TransformBlock(type_tfms=_to_tensor)
+    return TransformBlock(type_tfms=_ToSpectrum(wns))
 
 # %% ../nbs/01_dataloader.ipynb #ed806b75
+class _Rows:
+    "Picklable `i -> a[i]`, with a `__name__` so that fasttransform does not wrap it in a local function"
+    def __init__(self, a, name): self.a, self.__name__ = a, name
+    def __call__(self, i:int): return self.a[i]
+
+def _fixed_split(train_idx, valid_idx, o): return list(train_idx), list(valid_idx)
+
 def get_spectral_dls(
     X, # Spectral data matrix
     y, # Target values
@@ -162,10 +174,8 @@ def get_spectral_dls(
     if splitter is None: splitter = get_splitter()
     train_idx, valid_idx, test_idx = splitter(X, y)
     items = list(range(len(X)))
-    def _ds_splitter(o): return list(train_idx), list(valid_idx)
-    def _get_x(i:int): return X[i]
-    def _get_y(i:int): return y[i]
-    dblock = DataBlock(blocks=(SpectralBlock(wns), RegressionBlock()), splitter=_ds_splitter, get_x=_get_x, get_y=_get_y, batch_tfms=batch_tfms)
+    dblock = DataBlock(blocks=(SpectralBlock(wns), RegressionBlock()), splitter=partial(_fixed_split, train_idx, valid_idx),
+                       get_x=_Rows(X, '_get_x'), get_y=_Rows(y, '_get_y'), batch_tfms=batch_tfms)
     dls = dblock.dataloaders(items, bs=bs)
     dls.wns, dls.test_idx = wns, test_idx
     return dls, test_idx

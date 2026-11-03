@@ -2,6 +2,17 @@
 
 <!-- do not remove -->
 
+## 0.3.2
+
+### New Features
+
+- Accept a list of batch transforms in `train_or_load` ([#25](https://github.com/franckalbinet/soilspecdl/issues/25))
+
+### Bugs Squashed
+
+- Make the datasets of `get_spectral_dls` picklable, so DataLoaders with spawned workers work ([#26](https://github.com/franckalbinet/soilspecdl/issues/26))
+
+
 ## 0.3.1
 
 ### New Features
